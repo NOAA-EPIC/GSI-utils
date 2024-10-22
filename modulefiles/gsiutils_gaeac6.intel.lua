@@ -21,4 +21,4 @@ load(pathJoin("prod_util", prod_util_ver))
 pushenv("CFLAGS", "-xHOST")
 pushenv("FFLAGS", "-xHOST")
 
-whatis("Description: GSI utilities environment on GaeaC5 with Intel Compilers")
+whatis("Description: GSI utilities environment on GaeaC6 with Intel Compilers")
