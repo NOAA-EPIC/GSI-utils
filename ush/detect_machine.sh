@@ -48,7 +48,7 @@ case $(hostname -f) in
   *) MACHINE_ID=UNKNOWN ;;  # Unknown platform
 esac
 
-if [[ ${MACHINE_ID} == "UNKNOWN" ]]; then
+if [[ ${MACHINE_ID} == "UNKNOWN" ]]; then 
    case ${PW_CSP:-} in
       "aws" | "google" | "azure") MACHINE_ID=noaacloud ;;
       *) PW_CSP="UNKNOWN"
@@ -64,7 +64,9 @@ if [[ "${MACHINE_ID}" != "UNKNOWN" ]]; then
 fi
 
 # Try searching based on paths since hostname may not match on compute nodes
-if [[ -d /lfs/h3 ]]; then
+if [[ -d /opt/spack-stack ]]; then
+  MACHINE_ID=container
+elif [[ -d /lfs/h3 ]]; then
   # We are on NOAA Cactus or Dogwood
   MACHINE_ID=wcoss2
 elif [[ -d /lfs/h1 && ! -d /lfs/h3 ]]; then
@@ -78,8 +80,8 @@ elif [[ -d /scratch1 ]]; then
   MACHINE_ID=hera
 elif [[ -d /work ]]; then
   # We are on MSU Orion or Hercules
-  mount=$(findmnt -n -o SOURCE /home)
-  if [[ ${mount} =~ "hercules" ]]; then
+  if [[ -d /apps/other ]]; then
+    # We are on Hercules
     MACHINE_ID=hercules
   else
     MACHINE_ID=orion
